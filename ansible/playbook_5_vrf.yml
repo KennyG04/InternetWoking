@@ -1,10 +1,10 @@
 ---
-- name: Fase 5 - Aislamiento de Clientes (VRF Pinto)
+- name: Fase 5 - Aislamiento de Clientes (VRF Risco)
   hosts: pe_routers
   gather_facts: no
 
   vars:
-    vrf_name: "Pinto"
+    vrf_name: "Risco"
     rd_rt: "15:1"
     as_number: 15
     bgp_clientes:
@@ -16,7 +16,7 @@
         remote_as: "65002"
 
   tasks:
-    - name: 1. Crear VRF Pinto y configurar RD/RT
+    - name: 1. Crear VRF Risco y configurar RD/RT
       cisco.ios.ios_config:
         lines:
           - rd {{ rd_rt }}

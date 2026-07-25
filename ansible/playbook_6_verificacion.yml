@@ -1,0 +1,29 @@
+---
+- name: VERIFICAR ESTADOS DE LA RED (INTERFACES, OSPF, LDP, BGP)
+  hosts: routers
+  gather_facts: no
+  tasks:
+    - name: 1. Ejecutar comandos de verificacion en los routers
+      cisco.ios.ios_command:
+        commands:
+          - show ip interface brief
+          - show ip ospf neighbor
+          - show mpls ldp neighbor
+          - show ip bgp vpnv4 all summary
+      register: comandos_salida
+
+    - name: 2. ESTADO DE INTERFACES
+      debug:
+        var: comandos_salida.stdout_lines[0]
+
+    - name: 3. ESTADO DE VECINOS OSPF
+      debug:
+        var: comandos_salida.stdout_lines[1]
+
+    - name: 4. ESTADO DE VECINOS LDP (MPLS)
+      debug:
+        var: comandos_salida.stdout_lines[2]
+
+    - name: 5. ESTADO DE SESIONES MP-BGP (VPNv4)
+      debug:
+        var: comandos_salida.stdout_lines[3]
